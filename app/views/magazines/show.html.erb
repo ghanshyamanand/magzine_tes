@@ -1,0 +1,13 @@
+<h1> <%= @magazine.name %> </h1>
+
+<i> List of Articles </i>
+
+<% @articles.each do |_article| %>
+  <li>
+    <%= link_to "#{_article.title}", article_path(_article) %>
+  </li>
+<% end %>
+
+<br><br>
+
+<%= link_to "Create New Article", new_article_path(@magazine.id) %>

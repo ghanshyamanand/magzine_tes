@@ -1,0 +1,7 @@
+<h1>Magazines</h1>
+
+<% @magazines.each do |_magazine| %>
+  <li>
+    <%= link_to "#{_magazine.name}", magazines_show_path(_magazine) %>
+  </li>
+<% end %>

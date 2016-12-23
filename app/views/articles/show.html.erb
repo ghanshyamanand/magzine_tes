@@ -1,0 +1,40 @@
+<h1>Articles Details</h1>
+Title : <%= @article.title%>
+<br>
+Body : <%= @article.body %>
+<br>
+Author : <%= @article.author %>
+<br><br>
+<b>Comments</b>
+
+<% @comments.each do |_article_comment| %>
+  <div class ="article_comment">
+    User name : <%= _article_comment.user.email %>
+    <br>
+    Comment : <%= _article_comment.content %>
+    <br>
+    <% child_comments = Comment.fetch_child_comments(_article_comment) %>
+
+    <%= render 'comment_form', _article_comment: _article_comment, child_comments: child_comments %>
+    <hr>
+  </div>
+
+<% end %>
+
+<% if current_user.present? %>
+<h1>Create New Comment </h1>
+
+
+<%= form_for @comment do |f| %>
+  <%= f.label    :content %>
+  <br>
+  <br>
+  <%= f.text_area :content, size: "60x12" %>
+  <%= f.hidden_field :parent_class, :value => "Article" %>
+  <%= f.hidden_field :parent_id, :value => "#{@article.id}" %>
+  <%= f.hidden_field :user_id, :value => "#{current_user.id}" %>
+  <br><br>
+  <%= f.submit "Create" %>
+<% end %>
+
+<% end %>

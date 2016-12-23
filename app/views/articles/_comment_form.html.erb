@@ -1,0 +1,25 @@
+<% child_comments.each do |child_comment| %>
+  <div class= "comment_section">
+    User name : <%= child_comment.user.email %>
+    <br>
+    Comment : <%= child_comment.content %>
+    <br>
+    <hr>
+  </div>
+ <% end %>
+
+
+ <% if current_user.present? %>
+ <h1>Reply </h1>
+<%= form_for @comment do |f| %>
+  <%= f.label    :content %>
+  <br>
+  <br>
+  <%= f.text_field :content %>
+  <%= f.hidden_field :parent_class, :value => "Comment" %>
+  <%= f.hidden_field :parent_id, :value => "#{_article_comment.id}" %>
+  <%= f.hidden_field :user_id, :value => "#{current_user.id}" %>
+  <br><br>
+  <%= f.submit "Create" %>
+<% end %>
+<% end %>
